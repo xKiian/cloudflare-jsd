@@ -107,7 +107,7 @@ window._cf_chl_opt = {
 			}
 		}
 	};
-	//this is the LZW (Lempel-Ziv-Welch) compression algorithm. I couldn't bother to fix this
+	//this is the LZW (Lempel-Ziv-Welch) compression algorithm. I couldn't bother to deobfuscate this
 	encryptionStuff = {
 		'h': function (E) {
 			return null == E ? '' : encryptionStuff.g(E, 6, function (F, a6) {
