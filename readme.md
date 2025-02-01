@@ -4,7 +4,7 @@ I fully reverse engineered the `/cdn-cgi/challenge-platform/h/b/jsd` [challenge]
 
 ## Installation
 ```
-Copy cfbm.py & lzstring.py into your project and import Cloudflare from cfbm
+Copy cfhb.py & lzstring.py into your project and import Cloudflare from cfbm
 ```
 
 ## Fingerprint
