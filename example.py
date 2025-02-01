@@ -1,7 +1,7 @@
 # basic PoC (proof of concept) getting a cf_clearance cookie for bstn.com
 
 from requests import Session
-from cfbm import Cloudflare
+from cfhb import Cloudflare
 
 session = Session()
 session.headers = {
