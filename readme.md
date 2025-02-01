@@ -43,6 +43,7 @@ cf_clearance = (Cloudflare(session, "www.bstn.com", init_res).solve())
 
 print("[+]", cf_clearance, len(cf_clearance))
 print(session.cookies.get_dict())
+#Execution time: ~700ms
 ```
 
 ## Contributing
