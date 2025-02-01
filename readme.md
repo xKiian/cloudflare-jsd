@@ -1,6 +1,6 @@
 # Cloudflare reverse
 
-I fully reverse engineered the `/cdn-cgi/challenge-platform/h/b` [challenge](./reverse/script.js).
+I fully reverse engineered the `/cdn-cgi/challenge-platform/h/b/jsd` [challenge](./reverse/script.js).
 
 ## Installation
 ```
