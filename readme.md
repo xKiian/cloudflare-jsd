@@ -2,6 +2,10 @@
 
 I fully reverse engineered the `/cdn-cgi/challenge-platform/h/b/jsd` [challenge](./reverse/script.js).
 
+
+# ⭐️ star the repo
+please star the repo to show support❤️
+i might publish cf turnstile👀
 ## Installation
 ```
 Copy cfhb.py & lzstring.py into your project and import Cloudflare from cfbm
