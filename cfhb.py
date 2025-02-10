@@ -5,7 +5,8 @@ import re, json
 
 
 class Cloudflare:
-    def __init__(self, session: Session, host: str, default_page: str):
+    def __init__(self, session: Session, host: str, default_page: str, param_r: str):
+        self.param_r = param_r
         self.session = session
         self.host = host
         self.default_page = default_page
@@ -22,8 +23,6 @@ class Cloudflare:
         Solve the Cloudflare /h/b challenge and returns the cookie
         :return: cf_clearance cookie
         """
-        param_r = re.findall(r"r:'(.+?)'", self.default_page)
-
         script = self.session.get(f"https://{self.host}/cdn-cgi/challenge-platform/scripts/jsd/main.js").text
 
         key = next((i for i in script.split(",") if
@@ -32,7 +31,7 @@ class Cloudflare:
 
         compressed_fingerprint = LZString.compressToCustom(self.get_fingerprint(fp), key)
 
-        res = self.session.post(f"https://{self.host}/cdn-cgi/challenge-platform/h/b{path}{param_r}",
-                                data=compressed_fingerprint)
+        url = f"https://{self.host}/cdn-cgi/challenge-platform/h/b{path}{self.param_r}"
+        res = self.session.post(url, data=compressed_fingerprint)
 
         return res.cookies.get("cf_clearance")
