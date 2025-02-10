@@ -48,7 +48,7 @@ session.headers = {
 response = session.get("https://www.bstn.com/eu_de")
 init_res = response.text
 
-param_r = init_res.headers["cf-ray"].split("-")[0]
+param_r = response.headers["cf-ray"].split("-")[0]
 # do something with the initial request...
 
 cf_clearance = Cloudflare(session, "www.bstn.com", init_res, param_r).solve()
