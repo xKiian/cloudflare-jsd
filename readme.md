@@ -73,6 +73,10 @@ Contributions are welcome! Please feel free to submit a Pull Request. Here are s
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## Note
+
+This is **NOT** a cloudflare turnstile solver. It's a completetly different challenge. Please stop making Issues about it.
+
 ## Disclaimer
 
 This package is unofficial and not affiliated with Cloudflare. Use it responsibly and in accordance with Cloudflare's terms of service.
