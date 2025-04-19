@@ -77,6 +77,16 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 This is **NOT** a cloudflare turnstile solver. It's a completetly different challenge. Please stop making Issues about it.
 
+## Star History
+
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=xKiian/cloudflare-jsd&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=xKiian/cloudflare-jsd&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=xKiian/cloudflare-jsd&type=Date" />
+ </picture>
+
+---
+
 ## Disclaimer
 
 This package is unofficial and not affiliated with Cloudflare. Use it responsibly and in accordance with Cloudflare's terms of service.
