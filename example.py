@@ -1,6 +1,6 @@
 # basic PoC (proof of concept) getting a cf_clearance cookie for bstn.com
 
-from cfhb import Cloudflare
+from jsd import Cloudflare
 from curl_cffi import requests
 
 session = requests.Session(impersonate="chrome")
@@ -19,7 +19,7 @@ session.headers = {
 
 response = session.get("https://www.bstn.com/eu_de")
 init_res = response.text
-
+print(response)
 param_r = response.headers["cf-ray"].split("-")[0]
 # do something with the initial request...
 

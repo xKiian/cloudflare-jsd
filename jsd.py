@@ -25,13 +25,16 @@ class Cloudflare:
         """
         script = self.session.get(f"https://{self.host}/cdn-cgi/challenge-platform/scripts/jsd/main.js").text
 
+        extension = "b" if "/b/" in script else "g"
+
         key = next((i for i in script.split(",") if
                     re.fullmatch(r"(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[+\-$])[a-zA-Z0-9+\-$]{65}", i)), None)
         path = [i for i in script.split(",") if i.startswith("/jsd/r/")][0]
 
         compressed_fingerprint = LZString.compressToCustom(self.get_fingerprint(fp), key)
 
-        url = f"https://{self.host}/cdn-cgi/challenge-platform/h/b{path}{self.param_r}"
+        url = f"https://{self.host}/cdn-cgi/challenge-platform/h/{extension}{path}{self.param_r}"
+        
         res = self.session.post(url, data=compressed_fingerprint)
 
         return res.cookies.get("cf_clearance")

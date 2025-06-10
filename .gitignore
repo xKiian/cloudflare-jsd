@@ -1,3 +1,6 @@
 *.pyc
 .idea
 fingerprint.json
+node_modules
+package-lock.json
+in.js

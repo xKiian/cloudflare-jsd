@@ -10,7 +10,7 @@ i might publish cf turnstile👀
 ## Installation
 
 ```
-Copy cfhb.py & lzstring.py into your project and import Cloudflare from cfbm
+Copy jsd.py & lzstring.py into your project and import Cloudflare from cfbm
 ```
 
 ## Fingerprint
@@ -28,7 +28,7 @@ The script automatically gets the fingerprint and replaces the timestamp with %t
 ```python
 # basic PoC (proof of concept) getting a cf_clearance cookie for bstn.com
 
-from cfhb import Cloudflare
+from jsd import Cloudflare
 from curl_cffi import requests
 
 session = requests.Session(impersonate="chrome")
