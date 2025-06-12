@@ -1,22 +1,21 @@
-from requests import Session
+from curl_cffi import Session
 from lzstring import LZString
 from datetime import datetime
 import re, json
 
 
 class Cloudflare:
-    def __init__(self, session: Session, host: str, default_page: str, param_r: str):
+    def __init__(self, session: Session, host: str, param_r: str):
         self.param_r = param_r
         self.session = session
         self.host = host
-        self.default_page = default_page
 
     @staticmethod
     def get_fingerprint(fp: str) -> str:
         fingerprint = json.load(open(fp))
-        return (json.dumps(fingerprint)
-                .replace("%timestamp%", datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
-                )
+        time = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+
+        return json.dumps(fingerprint).replace("%timestamp%", time)
 
     def solve(self, fp: str = "fingerprint.json") -> str:
         """
@@ -34,7 +33,7 @@ class Cloudflare:
         compressed_fingerprint = LZString.compressToCustom(self.get_fingerprint(fp), key)
 
         url = f"https://{self.host}/cdn-cgi/challenge-platform/h/{extension}{path}{self.param_r}"
-        
+
         res = self.session.post(url, data=compressed_fingerprint)
 
         return res.cookies.get("cf_clearance")

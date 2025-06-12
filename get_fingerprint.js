@@ -1,127 +1,106 @@
-k = {
-	"object": "o",
-	"string": "s",
-	"undefined": "u",
-	"symbol": "z",
-	"number": "n",
-	"bigint": "I",
-	"boolean": "b"
+var S = this.document
+
+n = {
+	object: 'o',
+	string: 's',
+	undefined: 'u',
+	symbol: 'z',
+	number: 'n',
+	bigint: 'I',
+	boolean: 'b'
+};
+
+function z(E, i, OX) {
+
+	return i instanceof E.Function && 0 < E.Function.prototype.toString.call(i).indexOf("[native code]");
 }
 
-function l(d, e) {
-	return e instanceof d["Function"] &&
-		0 < d["Function"]["prototype"]["toString"]["call"](e) ["indexOf"]("[native code]")
-}
+function y(E, i, Y, Oh, k) {
 
-function getAllPropertyNames(d, Z, e) {
-	for (
-		e = [];
-		d !== null;
-		e = e.concat(Object.keys(d)),
-			d = Object.getPrototypeOf(d)
-	) ;
-	return e
-}
-
-function detectValueType(e, g, E) {
 	try {
-		g[E]["catch"](function () {
-		}); // Attempt to call .catch(), checking if g[E] is a Promise
+		i[Y]["catch"](function () {
+		});
 		return 'p';
-	} catch (G) {
+	} catch (A) {
 	}
-
 	try {
-		if (g[E] == null) return g[E] === void 0 ? 'u' : 'x'; // Check for undefined ('u') or null ('x')
-	} catch (H) {
-		return 'i'; // Return 'i' if accessing g[E] throws an error
+		if (null == i[Y]) {
+			return undefined === i[Y] ? 'u' : 'x';
+		}
+	} catch (F) {
+		return 'i';
 	}
-
-	let F = typeof g[E];
-	return e["Array"]["isArray"](g[E]) ? 'a' :
-		g[E] === e["Array"] ? 'C' :
-			g[E] === true ? 'T' :
-				g[E] === false ? 'F' :
-					F === "function" ? (l(e, g[E]) ? 'N' : 'f') :
-						k[F] || '?';
+	return E.Array.isArray(i[Y]) ? 'a' : i[Y] === E.Array ? 'q0' : true === i[Y] ? 'T' : false === i[Y] ? 'F' : (k = typeof i[Y], "function" == k ? z(E, i[Y]) ? 'N' : 'f' : n[k] || '?');
 }
 
-function processProperties(g, E, F, G) {
-	if (E === null || E === undefined) return G;
+function g(E, OQ, i) {
 
-	let propertyNames = getAllPropertyNames(E);
-
-	if (g.Object.getOwnPropertyNames) {
-		propertyNames = propertyNames.concat(g.Object.getOwnPropertyNames(E));
+	for (i = []; null !== E; i = i.concat(Object.keys(E)), E = Object.getPrototypeOf(E)) {
+		;
 	}
+	return i;
+}
 
-	propertyNames = g.Array.from && g.Set
-		? g.Array.from(new g.Set(propertyNames))
-		: (function (arr) {
-			arr.sort(); // Sort the array
-			for (let i = 0; i < arr.length;) {
-				if (arr[i] === arr[i + 1]) {
-					arr.splice(i + 1, 1); // Remove duplicate elements
-				} else {
-					i += 1;
-				}
-			}
-			return arr;
-		})(propertyNames);
+YldMH8 = function (E, i, Y, A, Op, OL, Oq, X, o, h, Q, L, K) {
 
-
-	let validTypes = ['n', 's', 'a', 'b'];
-	let isValidType = validTypes.includes.bind(validTypes);
-
-	for (let i = 0; i < propertyNames.length; i++) {
-		let key = propertyNames[i];
-		let type = detectValueType(g, E, key);
-
-		if (isValidType(type)) {
-			let isNumberString = type === 's' && !g.isNaN(E[key]);
-			if (F + key === 'd.cookie') {
-				addToGroup(F + key, type);
-			} else if (!isNumberString) {
-				addToGroup(F + key, E[key]);
-			}
-		} else {
-			addToGroup(F + key, type);
-		}
+	if (null === i || i === undefined) {
+		return A;
 	}
-
-	return G;
-
-	function addToGroup(value, key) {
-		if (!Object.prototype.hasOwnProperty.call(G, key)) {
-			G[key] = [];
+	X = g(i);
+	if (E.Object.getOwnPropertyNames) {
+		X = X.concat(E.Object.getOwnPropertyNames(i));
+	}
+	X = E.Array.from && E.Set ? E.Array.from(new E.Set(X)) : function (D, G) {
+		D.sort();
+		for (G = 0; G < D.length; D[G + 1] === D[G] ? D.splice(G + 1, 1) : G += 1) {
+			;
 		}
-		G[key].push(value);
+		return D;
+	}(X);
+	o = 'nAsAaAb'.split('A');
+	o = o.includes.bind(o);
+	for (h = 0; h < X.length; Q = X[h], L = y(E, i, Q), o(L) ? (K = 's' === L && !E.isNaN(i[Q]), "d.cookie" === Y + Q ? F(Y + Q, L) : K || F(Y + Q, i[Q])) : F(Y + Q, L), h++) {
+		;
+	}
+	return A;
+
+	function F(D, G) {
+		if (!Object.prototype.hasOwnProperty.call(A, G)) {
+			A[G] = [];
+		}
+		A[G].push(D);
 	}
 };
 
-function getFingerPrint() {
+function getFingerPrint(Oe, Y, k, A, F, X) {
 	try {
-		g = document.createElement("iframe")
-		g.style = "display: none"
-		g.tabIndex = '-1'
-		document.body.appendChild(g)
-		currentWindow = g.contentWindow
-		F = {}
-		F = processProperties(currentWindow, currentWindow, '', F)
-		F = processProperties(currentWindow, currentWindow.clientInformation || currentWindow.navigator, 'n.', F)
-		F = processProperties(currentWindow, g.contentDocument, 'd.', F)
-		self.document.body.removeChild(g)
-		return {r: F, e: null}
-	} catch (err) {
-		return {r: {}, e: err}
+		Y = S.createElement("iframe");
+		Y.style = "display: none";
+		Y.tabIndex = '-1';
+		S.body.appendChild(Y);
+		k = Y.contentWindow;
+		A = {};
+		A = YldMH8(k, k, '', A);
+		A = YldMH8(k, k.clientInformation || k.navigator, 'n.', A);
+		A = YldMH8(k, Y.contentDocument, 'd.', A);
+		S.body.removeChild(Y);
+		F = {};
+		F.r = A;
+		F.e = null;
+		return F;
+	} catch (o) {
+		X = {};
+		X.r = {};
+		X.e = o;
+		return X;
 	}
 }
 
 fp = getFingerPrint();
 if (fp.e === null) {
 	let output = JSON.stringify(fp.r);
-    output = output.replace(/\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}:\d{2}/, "%timestamp%");
-    console.log(output);
+	output = output.replace(/\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}:\d{2}/, "%timestamp%");
+	console.log(output);
 } else {
 	console.log(fp)
 }
