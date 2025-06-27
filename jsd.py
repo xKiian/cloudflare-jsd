@@ -25,7 +25,6 @@ class Cloudflare:
         script = self.session.get(f"https://{self.host}/cdn-cgi/challenge-platform/scripts/jsd/main.js").text
 
         extension = "b" if "/b/" in script else "g"
-
         key = next((i for i in script.split(",") if
                     re.fullmatch(r"(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[+\-$])[a-zA-Z0-9+\-$]{65}", i)), None)
         path = [i for i in script.split(",") if i.startswith("/jsd/r/")][0]
@@ -36,4 +35,4 @@ class Cloudflare:
 
         res = self.session.post(url, data=compressed_fingerprint)
 
-        return res.cookies.get("cf_clearance")
+        return res.headers["set-cookie"].split("cf_clearance=")[1].split("; ")[0]
