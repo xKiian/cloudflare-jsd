@@ -33,7 +33,7 @@ traverse(ast, {
 				}
 			});
 			objMaps[left.name] = map;
-			//path.remove();
+			path.remove();
 		}
 	},
 	VariableDeclarator(path) {
@@ -113,7 +113,7 @@ traverse(ast, {
 				return
 			}
 			const v = path.node.arguments[0].value;
-			path.replaceWith(t.stringLiteral(I(value)));
+			path.replaceWith(t.stringLiteral(M(value)));
 
 		}
 	}
