@@ -1,0 +1,8 @@
+github.com/goforj/godump v1.6.0 h1:3Dn8gaw5Xxxefr1ezTGTWrTKSr3ihK+eJ2xzRUoFfHQ=
+github.com/goforj/godump v1.6.0/go.mod h1:/Vy+p50JtOkwsFN5dA1HQ7LS5gtPk3f61DaP4UR2o4s=
+github.com/nukilabs/ftoa v1.0.0 h1:AiCb9begI2rwjDQm7/H+ce1ctdkixnOOw/bpurZTySc=
+github.com/nukilabs/ftoa v1.0.0/go.mod h1:ZJE2wT+SozGrxoj3oRB6Q6Kl3IMpCzdNOhymdmLGrHU=
+github.com/nukilabs/unicodeid v0.1.0 h1:+CtAaV9CkgVA3Jy9V29yb57DPCLsnWUJrP9LxhkD89w=
+github.com/nukilabs/unicodeid v0.1.0/go.mod h1:3qxjfcmcgVYBg9dMRNSniAVfqxwOed7JU7P2rPkJrRg=
+github.com/t14raptor/go-fast v0.0.4 h1:48k3hIS7rx20iq+kJx39XpKaBi5k+etCtl9AXHRd0O8=
+github.com/t14raptor/go-fast v0.0.4/go.mod h1:IyzuItbJu1DY1z+xBRE9Bk/jCvaJEFG/yeSupi/2HDU=
