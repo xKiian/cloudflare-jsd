@@ -20,7 +20,9 @@ func main() {
 		panic(err)
 	}
 
-	deobf.DeobfuscateCf(ast)
+	deobf.UnrollMaps(ast)
+	callee := deobf.ReplaceReassignments(ast)
+	deobf.ReplaceStrings(ast, callee)
 
 	os.WriteFile("out.js", []byte(generator.Generate(ast)), 0644)
 }

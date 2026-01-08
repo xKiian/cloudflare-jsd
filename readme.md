@@ -1,17 +1,17 @@
-# Cloudflare reverse
 
-I fully reverse engineered the `/cdn-cgi/challenge-platform/h/b/jsd` [challenge](./reverse/script.js).
+
+# THIS REPOSITORY IS CURRENTLY BEING UPDATED TO GOLANG
+
+
+# Cloudflare jsd
+
+I fully reverse engineered the ` Cloudflare jsd` [challenge](./reverse/script.js).
 
 # ⭐️ star the repo
 
 please star the repo to show support❤️
 i might publish cf turnstile👀
 
-## Installation
-
-```
-Copy jsd.py & lzstring.py into your project and import Cloudflare from cfbm
-```
 
 ## Fingerprint
 
@@ -23,54 +23,6 @@ Obtaining a fingerprint is pretty easy.
 
 The script automatically gets the fingerprint and replaces the timestamp with %timestamp% for your convenience
 
-## Example Usage
-
-```python
-# basic PoC (proof of concept) getting a cf_clearance cookie for bstn.com
-
-from jsd import Cloudflare
-from curl_cffi import requests
-
-session = requests.Session(impersonate="chrome")
-session.headers = {
-    "connection": "keep-alive",
-    "sec-ch-ua-platform": '"Windows"',
-    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36",
-    "sec-ch-ua": '"Not A(Brand";v="8", "Chromium";v="132", "Google Chrome";v="132"',
-    "sec-ch-ua-mobile": "?0",
-    "sec-fetch-site": "same-origin",
-    "sec-fetch-mode": "no-cors",
-    "sec-fetch-dest": "script",
-    "accept-encoding": "gzip, deflate, br, zstd",
-    "accept-language": "en-US,en;q=0.9",
-}
-
-response = session.get("https://www.bstn.com/eu_de")
-print(response)
-
-param_r = response.headers["cf-ray"].split("-")[0]
-# do something with the initial request...
-
-cf_clearance = Cloudflare(session, "www.bstn.com", param_r).solve()
-
-print("[+]", cf_clearance, len(cf_clearance))
-
-response = session.get("https://www.bstn.com/eu_de")
-print(response)
-
-
-# execution time: ~700ms
-```
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request. Here are some ways you can contribute:
-
-- 🐛 Report bugs
-- ✨ Request features
-- 📝 Improve documentation
-- 🔧 Submit bug fixes
-- 🎨 Add examples
 
 ## License
 
@@ -93,5 +45,3 @@ This is **NOT** a cloudflare turnstile solver. It's a completetly different chal
 ## Disclaimer
 
 This package is unofficial and not affiliated with Cloudflare. Use it responsibly and in accordance with Cloudflare's terms of service.
-
-> I might share how I managed to reverse engineer the challenge if this repository receives enough attention.

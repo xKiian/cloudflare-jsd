@@ -74,7 +74,7 @@ func (v *deobf) VisitExpression(n *ast.Expression) {
 	}
 }
 
-func DeobfuscateCf(p *ast.Program) {
+func UnrollMaps(p *ast.Program) {
 	f := &deobf{
 		numberMap: make(map[ast.Id]map[string]float64),
 	}
