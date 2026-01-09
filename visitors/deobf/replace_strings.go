@@ -1,9 +1,14 @@
 package deobf
 
 import (
+	"fmt"
+	"os"
+	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/t14raptor/go-fast/ast"
+	"github.com/t14raptor/go-fast/generator"
 )
 
 type stringReplacerGather struct {
@@ -11,6 +16,7 @@ type stringReplacerGather struct {
 	funcName    string
 	offset      int
 	stringArray []string
+	shuffleExpr *ast.Expression
 }
 
 func (v *stringReplacerGather) VisitCallExpression(n *ast.CallExpression) {
@@ -70,6 +76,29 @@ func (v *stringReplacerGather) VisitFunctionDeclaration(n *ast.FunctionDeclarati
 	v.offset = int(val)
 }
 
+func (v *stringReplacerGather) VisitForStatement(n *ast.ForStatement) {
+	n.VisitChildrenWith(v)
+
+	try, ok := n.Body.Stmt.(*ast.TryStatement)
+	if !ok {
+		return
+	}
+
+	if len(try.Body.List) != 1 {
+		return
+	}
+
+	ifStmt, ok := try.Body.List[0].Stmt.(*ast.IfStatement)
+	if !ok {
+		return
+	}
+	if !strings.Contains(generator.Generate(n), "parseInt") { //just to be sure
+		return
+	}
+
+	v.shuffleExpr = ifStmt.Test
+}
+
 type stringReplacer struct {
 	ast.NoopVisitor
 	funcName    string
@@ -107,12 +136,39 @@ func (v *stringReplacer) VisitExpression(n *ast.Expression) {
 	}
 }
 
+var normalRe = regexp.MustCompile(`^[0-9][a-zA-Z0-9+\-*/%()=<>!&|^.,\s]*$`)
+var shuffleCheckerRe = regexp.MustCompile(`parseInt\(.\((\d*?)\)\)`)
+
 func ReplaceStrings(p *ast.Program, id *ast.Identifier) {
 	f := &stringReplacerGather{
 		funcName: id.Name,
 	}
 	f.V = f
 	p.VisitWith(f)
+
+	matches := shuffleCheckerRe.FindAllStringSubmatch(generator.Generate(f.shuffleExpr), -1)
+	var out []int
+	for _, m := range matches {
+		num := m[1]
+		val, err := strconv.ParseInt(num, 0, 64)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "parse error:", err)
+			continue
+		}
+		out = append(out, int(val))
+	}
+
+outer:
+	for {
+		for _, entry := range out {
+			text := f.stringArray[entry+f.offset]
+			if !normalRe.MatchString(text) {
+				f.stringArray = append(f.stringArray[1:], f.stringArray[0])
+				continue outer
+			}
+		}
+		break
+	}
 
 	f2 := &stringReplacer{
 		funcName:    id.Name,

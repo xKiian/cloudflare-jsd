@@ -5,6 +5,7 @@ import (
 
 	"github.com/t14raptor/go-fast/generator"
 	"github.com/t14raptor/go-fast/parser"
+	"github.com/t14raptor/go-fast/transform/simplifier"
 	"github.com/xkiian/cloudflare-jsd/visitors/deobf"
 )
 
@@ -23,6 +24,7 @@ func main() {
 	deobf.UnrollMaps(ast)
 	callee := deobf.ReplaceReassignments(ast)
 	deobf.ReplaceStrings(ast, callee)
+	simplifier.Simplify(ast, false)
 
 	os.WriteFile("out.js", []byte(generator.Generate(ast)), 0644)
 }
