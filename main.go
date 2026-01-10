@@ -7,6 +7,7 @@ import (
 	"github.com/t14raptor/go-fast/parser"
 	"github.com/t14raptor/go-fast/transform/simplifier"
 	"github.com/xkiian/cloudflare-jsd/visitors/deobf"
+	"github.com/xkiian/cloudflare-jsd/visitors/extract"
 )
 
 func main() {
@@ -25,7 +26,10 @@ func main() {
 	deobf.SequenceUnroller(ast)
 	callee := deobf.ReplaceReassignments(ast)
 	deobf.ReplaceStrings(ast, callee)
+	deobf.ConcatStrings(ast)
 	simplifier.Simplify(ast, false)
 
 	os.WriteFile("out.js", []byte(generator.Generate(ast)), 0644)
+
+	extract.ParseScript(ast)
 }

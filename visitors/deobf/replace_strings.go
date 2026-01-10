@@ -79,14 +79,9 @@ func (v *stringReplacerGather) VisitForStatement(n *ast.ForStatement) {
 		return
 	}
 
-	/*if len(try.Body.List) != 2 {
-		return
-	}*/
 	if !strings.Contains(generator.Generate(n), "parseInt") { //just to be sure
 		return
 	}
-
-	fmt.Println(generator.Generate(n))
 
 	v.shuffleExpr = n.Body
 }
