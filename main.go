@@ -22,6 +22,7 @@ func main() {
 	}
 
 	deobf.UnrollMaps(ast)
+	deobf.SequenceUnroller(ast)
 	callee := deobf.ReplaceReassignments(ast)
 	deobf.ReplaceStrings(ast, callee)
 	simplifier.Simplify(ast, false)

@@ -16,7 +16,7 @@ type stringReplacerGather struct {
 	funcName    string
 	offset      int
 	stringArray []string
-	shuffleExpr *ast.Expression
+	shuffleExpr *ast.Statement
 }
 
 func (v *stringReplacerGather) VisitCallExpression(n *ast.CallExpression) {
@@ -44,17 +44,12 @@ func (v *stringReplacerGather) VisitFunctionDeclaration(n *ast.FunctionDeclarati
 		return
 	}
 
-	rStmt, ok := n.Function.Body.List[0].Stmt.(*ast.ReturnStatement)
+	eStmt, ok := n.Function.Body.List[0].Stmt.(*ast.ExpressionStatement)
 	if !ok {
 		return
 	}
 
-	sExpr, ok := rStmt.Argument.Expr.(*ast.SequenceExpression)
-	if !ok {
-		return
-	}
-
-	aExpr, ok := sExpr.Sequence[0].Expr.(*ast.AssignExpression)
+	aExpr, ok := eStmt.Expression.Expr.(*ast.AssignExpression)
 	if !ok {
 		return
 	}
@@ -79,24 +74,21 @@ func (v *stringReplacerGather) VisitFunctionDeclaration(n *ast.FunctionDeclarati
 func (v *stringReplacerGather) VisitForStatement(n *ast.ForStatement) {
 	n.VisitChildrenWith(v)
 
-	try, ok := n.Body.Stmt.(*ast.TryStatement)
+	_, ok := n.Body.Stmt.(*ast.TryStatement)
 	if !ok {
 		return
 	}
 
-	if len(try.Body.List) != 1 {
+	/*if len(try.Body.List) != 2 {
 		return
-	}
-
-	ifStmt, ok := try.Body.List[0].Stmt.(*ast.IfStatement)
-	if !ok {
-		return
-	}
+	}*/
 	if !strings.Contains(generator.Generate(n), "parseInt") { //just to be sure
 		return
 	}
 
-	v.shuffleExpr = ifStmt.Test
+	fmt.Println(generator.Generate(n))
+
+	v.shuffleExpr = n.Body
 }
 
 type stringReplacer struct {
