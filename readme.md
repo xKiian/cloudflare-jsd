@@ -10,7 +10,6 @@ I fully reverse engineered the ` Cloudflare jsd` [challenge](./reverse/script.js
 # ⭐️ star the repo
 
 please star the repo to show support❤️
-i might publish cf turnstile👀
 
 
 ## Fingerprint
